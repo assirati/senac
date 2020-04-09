@@ -1,5 +1,6 @@
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
+
 # População total, N.
 N = 15000
 # Número inicial de indivíduos infectados e recuperados, I0 e R0.
@@ -13,14 +14,17 @@ eventos = range(0, 61)
 # Quantidade de pontos a integrar (intervalo de integração)
 pontos = [0, 1001]
 
+# Sistema de equações diferenciais
 def deriv(t, y, N, beta, gama):
     S, I, R = y
     dSdt = -beta * S * I
     dIdt = beta * S * I - gama * I
     dRdt = gama * I
     return dSdt, dIdt, dRdt
+
 # Vetor de condições iniciais
 y0 = S0, I0, R0
+
 # Integração das equações do modelo pela grade de tempo, t.
 sol = solve_ivp(deriv, pontos, y0, args=(N, beta, gama), t_eval=eventos,
                 method='RK23')
